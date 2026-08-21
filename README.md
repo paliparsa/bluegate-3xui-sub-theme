@@ -1,4 +1,4 @@
-# BlueGate 3x-ui Subscription Theme
+# BlueGate 3x-ui Subscription Theme v2.0
 
 تم اختصاصی Subscription برای 3x-ui با زبان طراحی BlueGate / BluePing.
 
@@ -96,3 +96,15 @@ sudo BGT_AUTO_SET=0 bash install.sh
 - `install.sh` — نصب و تنظیم خودکار در SQLite در صورت امکان
 - `update.sh` — بروزرسانی از GitHub
 - `uninstall.sh` — غیرفعال‌سازی امن
+
+
+## v2.0
+
+- Premium Secure Pass / Service Identity hero
+- Animated usage orb + traffic progress visualization
+- Expiry countdown and expiry state
+- Mobile bottom action bar with safe-area support
+- Fully responsive down to 320px
+- Richer quick-connect actions
+- Redesigned configuration cards
+- Denser premium BlueGate visual language without external CDN dependencies

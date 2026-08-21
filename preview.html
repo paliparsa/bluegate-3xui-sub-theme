@@ -3,185 +3,303 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#06101d">
+  <meta name="theme-color" content="#050b14">
   <meta name="color-scheme" content="dark light">
-  <title>BlueGate • Subscription</title>
+  <title>BlueGate Pro • Subscription</title>
   <style>
     :root{
-      --bg:#06101d;--bg2:#081522;--surface:#0b1828;--surface2:#102035;--surface3:#152a43;
-      --text:#f7fbff;--muted:#94abc2;--muted2:#b7c7d7;--line:#1c3550;--line2:#315e86;
-      --blue:#3b9fff;--blue2:#77c9ff;--green:#4bd8a7;--purple:#a98aff;--gold:#ffd36e;
-      --danger:#ff758a;--shadow:0 26px 80px rgba(0,0,0,.32);--radius:28px;--max:1040px;
-      font-family:Vazirmatn,Tahoma,Arial,system-ui,-apple-system,sans-serif;color-scheme:dark
+      --bg:#050b14;--bg2:#07111d;--panel:#0a1422;--panel2:#0f1d2f;--panel3:#13263d;
+      --text:#f6fbff;--muted:#8fa6bb;--muted2:#b6c8d8;--line:rgba(117,169,214,.16);--line2:rgba(119,201,255,.38);
+      --blue:#3a9fff;--blue2:#7bcaff;--cyan:#70e7ff;--green:#4bd8a7;--purple:#a98aff;--gold:#ffd36e;--danger:#ff758a;
+      --shadow:0 24px 80px rgba(0,0,0,.34);--r-xl:30px;--r-lg:24px;--r-md:18px;--max:1080px;
+      font-family:Vazirmatn,Tahoma,Arial,system-ui,-apple-system,sans-serif;color-scheme:dark;
     }
     html[data-theme="light"]{
-      --bg:#edf4fa;--bg2:#f5f9fc;--surface:#fff;--surface2:#f7fbff;--surface3:#eaf3fa;
-      --text:#102033;--muted:#627990;--muted2:#4d657c;--line:#d7e5f0;--line2:#b7d1e4;
-      --shadow:0 24px 65px rgba(49,83,112,.13);color-scheme:light
+      --bg:#edf4fa;--bg2:#f7fbff;--panel:#ffffff;--panel2:#f6fbff;--panel3:#eaf3fa;
+      --text:#102033;--muted:#617991;--muted2:#455f76;--line:rgba(66,119,161,.16);--line2:rgba(44,137,210,.38);
+      --shadow:0 22px 64px rgba(50,86,116,.14);color-scheme:light;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
       margin:0;min-height:100vh;color:var(--text);font-size:15px;overflow-x:hidden;
       background:
-        radial-gradient(circle at 8% -4%,rgba(50,144,244,.20),transparent 28%),
-        radial-gradient(circle at 94% 8%,rgba(61,177,255,.10),transparent 24%),
-        radial-gradient(circle at 55% 104%,rgba(169,138,255,.08),transparent 28%),
-        linear-gradient(180deg,var(--bg),var(--bg2) 42%,var(--bg));
+        radial-gradient(circle at 10% -6%,rgba(56,151,244,.24),transparent 30%),
+        radial-gradient(circle at 94% 10%,rgba(112,231,255,.11),transparent 23%),
+        radial-gradient(circle at 50% 104%,rgba(169,138,255,.10),transparent 30%),
+        linear-gradient(180deg,var(--bg),var(--bg2) 46%,var(--bg));
+    }
+    body:before{
+      content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.34;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:36px 36px;
+      mask-image:linear-gradient(to bottom,black,transparent 78%);
     }
     button,a{font:inherit;-webkit-tap-highlight-color:transparent}
     a{color:inherit}
-    .shell{width:min(var(--max),calc(100% - 28px));margin:auto;padding:18px 0 40px}
+    .shell{width:min(var(--max),calc(100% - 28px));margin:auto;padding:14px 0 118px}
+    .glass{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,color-mix(in srgb,var(--panel) 93%,transparent),color-mix(in srgb,var(--panel) 84%,transparent));
+      backdrop-filter:blur(18px)
+    }
     .topbar{
-      position:sticky;top:10px;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:14px;
-      min-height:66px;padding:9px 12px;border:1px solid color-mix(in srgb,var(--line) 76%,transparent);
-      border-radius:22px;background:color-mix(in srgb,var(--surface) 84%,transparent);
-      backdrop-filter:blur(20px);box-shadow:0 14px 46px rgba(0,0,0,.13)
+      position:sticky;top:10px;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:14px;
+      min-height:68px;padding:9px 12px;border-radius:22px;box-shadow:0 14px 46px rgba(0,0,0,.14)
     }
     .brand{display:flex;align-items:center;gap:11px;min-width:0}
-    .brand-logo{
-      width:48px;height:48px;border-radius:16px;object-fit:cover;flex:0 0 auto;
-      box-shadow:0 10px 28px rgba(33,137,236,.19);border:1px solid rgba(119,201,255,.16)
-    }
+    .brand-logo{width:49px;height:49px;border-radius:16px;object-fit:cover;flex:0 0 auto;border:1px solid rgba(119,201,255,.17);box-shadow:0 12px 30px rgba(32,137,236,.18)}
     .brand small{display:block;color:var(--blue2);font-size:9px;font-weight:900;letter-spacing:.16em;direction:ltr}
     .brand strong{display:block;margin-top:2px;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52vw}
     .top-actions{display:flex;gap:7px}
     .icon-btn{
-      width:43px;height:43px;border:1px solid var(--line);border-radius:14px;background:var(--surface2);
+      width:44px;height:44px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);
       color:var(--text);display:grid;place-items:center;cursor:pointer;transition:.18s
     }
     .icon-btn:hover{transform:translateY(-2px);border-color:var(--line2)}
-    .hero{
-      position:relative;isolation:isolate;margin-top:18px;padding:27px;border:1px solid var(--line);border-radius:32px;
+
+    .identity{
+      position:relative;overflow:hidden;margin-top:16px;padding:26px;border-radius:32px;
+      border:1px solid rgba(89,167,235,.24);box-shadow:var(--shadow);
       background:
-        radial-gradient(circle at 0 0,rgba(59,159,255,.13),transparent 42%),
-        linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.016));
-      box-shadow:var(--shadow);overflow:hidden
+        radial-gradient(circle at 82% 16%,rgba(77,178,255,.24),transparent 32%),
+        radial-gradient(circle at 12% 105%,rgba(92,117,255,.15),transparent 33%),
+        linear-gradient(135deg,rgba(12,31,50,.98),rgba(6,17,29,.97));
+      isolation:isolate
     }
-    .hero:before{
-      content:"";position:absolute;inset:0 0 auto;height:3px;
-      background:linear-gradient(90deg,transparent,rgba(77,181,255,.85),transparent);opacity:.7
+    html[data-theme="light"] .identity{
+      background:
+        radial-gradient(circle at 82% 16%,rgba(77,178,255,.16),transparent 32%),
+        radial-gradient(circle at 12% 105%,rgba(92,117,255,.10),transparent 33%),
+        linear-gradient(135deg,#fbfdff,#edf6fd)
     }
-    .hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:22px;align-items:center}
-    .eyebrow{display:flex;align-items:center;gap:8px;color:var(--blue2);font-size:10px;font-weight:900;letter-spacing:.08em}
-    .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 6px rgba(59,159,255,.08)}
-    h1{font-size:clamp(30px,5vw,52px);line-height:1.16;letter-spacing:-1.4px;margin:12px 0 10px}
-    .hero p{margin:0;color:var(--muted);line-height:1.95;max-width:670px}
-    .status-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:19px}
+    .identity:before{
+      content:"";position:absolute;inset:-70% auto auto -18%;width:390px;height:390px;border-radius:50%;
+      border:1px solid rgba(119,201,255,.12);box-shadow:0 0 0 36px rgba(119,201,255,.025),0 0 0 78px rgba(119,201,255,.018)
+    }
+    .identity:after{
+      content:"";position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,transparent,var(--cyan),var(--blue),transparent);opacity:.76
+    }
+    .identity-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:26px;align-items:stretch}
+    .identity-copy{display:flex;flex-direction:column;justify-content:space-between;min-height:245px}
+    .micro{display:flex;align-items:center;gap:8px;color:var(--blue2);font-size:10px;font-weight:900;letter-spacing:.11em}
+    .micro i{width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 6px rgba(59,159,255,.08),0 0 18px rgba(59,159,255,.52)}
+    .plan-name{font-size:clamp(34px,6vw,59px);line-height:1.02;letter-spacing:-1.7px;margin:14px 0 8px}
+    .identity-copy p{margin:0;color:var(--muted);line-height:1.95;max-width:650px}
+    .identity-footer{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:22px}
+    .status-pills{display:flex;flex-wrap:wrap;gap:8px}
     .pill{
-      display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:7px 10px;border:1px solid var(--line);
+      display:inline-flex;align-items:center;gap:7px;min-height:35px;padding:7px 11px;border:1px solid var(--line);
       border-radius:999px;background:rgba(255,255,255,.025);color:var(--muted2);font-size:11px;font-weight:800
     }
     .dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
-    .pill.ok{border-color:rgba(75,216,167,.22);background:rgba(75,216,167,.07);color:#81e8c3}
-    .pill.ok .dot{background:var(--green);box-shadow:0 0 0 5px rgba(75,216,167,.08)}
-    .pill.bad{border-color:rgba(255,117,138,.22);background:rgba(255,117,138,.07);color:#ff9aac}
+    .pill.ok{border-color:rgba(75,216,167,.24);background:rgba(75,216,167,.075);color:#8be9c8}
+    .pill.ok .dot{background:var(--green);box-shadow:0 0 0 5px rgba(75,216,167,.08),0 0 14px rgba(75,216,167,.34)}
+    .pill.bad{border-color:rgba(255,117,138,.24);background:rgba(255,117,138,.075);color:#ffa0af}
     .pill.bad .dot{background:var(--danger)}
-    .pill.warn{border-color:rgba(255,211,110,.22);background:rgba(255,211,110,.07);color:#ffe19a}
+    .pill.warn{border-color:rgba(255,211,110,.24);background:rgba(255,211,110,.075);color:#ffe19a}
     .pill.warn .dot{background:var(--gold)}
-    .usage-card{
-      position:relative;min-height:240px;border:1px solid var(--line);border-radius:28px;padding:20px;
-      background:linear-gradient(180deg,var(--surface2),var(--surface));display:grid;place-items:center
+    .secure-badge{display:flex;align-items:center;gap:9px;color:var(--muted2);font-size:10px}
+    .secure-badge b{color:var(--text)}
+
+    .orb-wrap{display:grid;place-items:center;position:relative;min-height:245px;border:1px solid rgba(119,201,255,.15);border-radius:27px;background:rgba(255,255,255,.022)}
+    .orb{
+      --p:0;position:relative;width:188px;height:188px;border-radius:50%;display:grid;place-items:center;
+      background:
+        radial-gradient(circle at 50% 42%,rgba(255,255,255,.12),transparent 33%),
+        conic-gradient(var(--blue) calc(var(--p)*1%),rgba(255,255,255,.075) 0);
+      filter:drop-shadow(0 18px 28px rgba(22,117,216,.24));
     }
-    .ring{
-      --p:0;width:170px;height:170px;border-radius:50%;display:grid;place-items:center;
-      background:conic-gradient(var(--blue) calc(var(--p)*1%),rgba(255,255,255,.075) 0);
-      box-shadow:0 20px 52px rgba(0,0,0,.18),inset 0 0 28px rgba(59,159,255,.08)
+    .orb:before{
+      content:"";position:absolute;inset:10px;border-radius:50%;
+      background:linear-gradient(180deg,var(--panel2),var(--panel));
+      box-shadow:inset 0 0 0 1px var(--line),inset 0 0 38px rgba(57,159,255,.08)
     }
-    .ring:after{
-      content:"";position:absolute;width:136px;height:136px;border-radius:50%;
-      background:linear-gradient(180deg,var(--surface2),var(--surface));
-      box-shadow:inset 0 0 0 1px var(--line)
+    .orb:after{
+      content:"";position:absolute;inset:-10px;border-radius:50%;border:1px dashed rgba(119,201,255,.22);
+      animation:spin 18s linear infinite
     }
-    .ring-copy{position:relative;z-index:2;text-align:center}
-    .ring-copy strong{display:block;font-size:29px;direction:ltr}
-    .ring-copy span{display:block;margin-top:3px;font-size:10px;color:var(--muted)}
-    .ring-caption{margin-top:13px;color:var(--muted2);font-size:11px;text-align:center}
-    .section-title{display:flex;align-items:end;justify-content:space-between;gap:14px;margin:26px 3px 12px}
+    .orb-center{position:relative;z-index:2;text-align:center}
+    .orb-center strong{display:block;font-size:31px;direction:ltr}
+    .orb-center span{display:block;margin-top:2px;color:var(--muted);font-size:10px}
+    .orb-sub{position:absolute;bottom:15px;color:var(--muted2);font-size:10px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .section-title{display:flex;align-items:end;justify-content:space-between;gap:14px;margin:27px 3px 12px}
     .section-title h2{font-size:20px;margin:0}
     .section-title span{font-size:11px;color:var(--muted)}
-    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-    .stat{
-      min-height:126px;padding:16px;border:1px solid var(--line);border-radius:23px;
-      background:linear-gradient(180deg,rgba(255,255,255,.033),rgba(255,255,255,.016))
-    }
-    .stat-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:rgba(59,159,255,.08);font-size:17px}
-    .stat span{display:block;margin-top:13px;color:var(--muted);font-size:10px}
-    .stat strong{display:block;margin-top:4px;font-size:18px;direction:ltr;text-align:right}
-    .stat small{display:block;margin-top:4px;color:var(--muted2);font-size:9px}
-    .action-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:10px}
-    .subscription-card,.support-card,.configs-card,.announce{
+
+    .overview{display:grid;grid-template-columns:1.15fr .85fr;gap:10px}
+    .usage-panel,.expiry-panel,.subscription-card,.support-card,.configs-card,.announce,.quick-card{
       padding:18px;border:1px solid var(--line);border-radius:26px;
-      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.014))
+      background:linear-gradient(180deg,rgba(255,255,255,.032),rgba(255,255,255,.015))
     }
-    .card-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .card-head h3{font-size:15px;margin:0}
-    .card-head small{color:var(--muted);font-size:9px}
+    .usage-head,.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .usage-head h3,.card-head h3{font-size:15px;margin:0}
+    .usage-head small,.card-head small{color:var(--muted);font-size:9px}
+    .big-row{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-top:18px}
+    .big-number strong{font-size:34px;letter-spacing:-1px;direction:ltr;display:block}
+    .big-number span{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+    .mini-chart{height:58px;display:flex;align-items:end;gap:5px;flex:1;max-width:240px;direction:ltr}
+    .mini-chart i{display:block;width:100%;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,var(--blue2),rgba(58,159,255,.18));min-height:8px;opacity:.78}
+    .progress-track{height:10px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:16px}
+    .progress-fill{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--blue),var(--cyan));box-shadow:0 0 18px rgba(73,176,255,.35);transition:width .55s ease}
+    .duo{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}
+    .duo-item{padding:13px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.018)}
+    .duo-item span{display:block;color:var(--muted);font-size:9px}
+    .duo-item strong{display:block;margin-top:5px;font-size:16px;direction:ltr;text-align:right}
+    .expiry-panel{position:relative;overflow:hidden}
+    .countdown{margin-top:18px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+    .days strong{font-size:38px;display:block;letter-spacing:-1px}
+    .days span{color:var(--muted);font-size:10px}
+    .date-box{padding:11px 13px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.02);text-align:center}
+    .date-box b{display:block;font-size:12px}
+    .date-box small{display:block;margin-top:3px;color:var(--muted);font-size:9px}
+    .online-line{display:flex;justify-content:space-between;gap:10px;margin-top:17px;padding-top:14px;border-top:1px dashed var(--line);font-size:10px;color:var(--muted)}
+    .online-line b{color:var(--muted2);font-weight:800}
+
+    .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:10px}
+    .metric{
+      min-height:122px;padding:15px;border:1px solid var(--line);border-radius:21px;background:linear-gradient(180deg,rgba(255,255,255,.026),rgba(255,255,255,.012));
+      position:relative;overflow:hidden
+    }
+    .metric:after{content:"";position:absolute;inset:auto -30px -44px auto;width:105px;height:105px;border-radius:50%;background:rgba(59,159,255,.06);filter:blur(2px)}
+    .metric-icon{width:37px;height:37px;border-radius:12px;display:grid;place-items:center;background:rgba(59,159,255,.08);border:1px solid rgba(119,201,255,.10);font-size:17px}
+    .metric span{display:block;margin-top:13px;color:var(--muted);font-size:10px}
+    .metric strong{display:block;margin-top:4px;font-size:18px;direction:ltr;text-align:right}
+    .metric small{display:block;margin-top:4px;color:var(--muted2);font-size:9px}
+
+    .action-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:10px}
     .url-box{
-      margin-top:13px;padding:12px 13px;border:1px solid var(--line);border-radius:16px;
+      margin-top:13px;padding:13px 14px;border:1px solid var(--line);border-radius:16px;
       background:rgba(0,0,0,.12);direction:ltr;text-align:left;font:11px ui-monospace,SFMono-Regular,Consolas,monospace;
       overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted2)
     }
     .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
     .btn{
-      min-height:44px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface2);
+      min-height:46px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);
       color:var(--text);font-weight:850;font-size:11px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
       gap:7px;cursor:pointer;transition:.18s
     }
     .btn:hover{transform:translateY(-2px);border-color:var(--line2)}
     .btn.primary{border-color:transparent;background:linear-gradient(135deg,#1778e8,#43b6ff);box-shadow:0 12px 28px rgba(39,142,240,.20)}
     .btn.green{border-color:rgba(75,216,167,.22);background:rgba(75,216,167,.08);color:#8ceac8}
-    .support-card{display:flex;flex-direction:column;justify-content:space-between}
-    .support-card p{margin:10px 0 14px;color:var(--muted);font-size:11px;line-height:1.9}
-    .configs{display:grid;gap:8px;margin-top:12px}
-    .config-row{
-      display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:11px;
-      border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.018);min-width:0
+    .quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+    .quick{
+      min-height:86px;padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.018);
+      display:flex;flex-direction:column;justify-content:space-between;cursor:pointer
     }
-    .config-row code{direction:ltr;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted2);font-size:10px}
-    .copy-mini{width:35px;height:35px;border:1px solid var(--line);border-radius:11px;background:var(--surface2);color:var(--text);cursor:pointer}
-    .announce{margin-top:10px;border-color:rgba(255,211,110,.18);background:rgba(255,211,110,.055)}
+    .quick i{font-style:normal;font-size:19px}
+    .quick b{font-size:11px}
+    .quick span{font-size:9px;color:var(--muted)}
+    .support-card{display:flex;flex-direction:column;justify-content:space-between}
+    .support-visual{
+      height:100px;border-radius:20px;margin-bottom:13px;border:1px solid rgba(75,216,167,.14);
+      background:
+        radial-gradient(circle at 76% 20%,rgba(75,216,167,.16),transparent 34%),
+        linear-gradient(135deg,rgba(75,216,167,.06),rgba(59,159,255,.05));
+      display:flex;align-items:end;padding:14px
+    }
+    .support-visual b{font-size:17px}
+    .support-card p{margin:10px 0 14px;color:var(--muted);font-size:11px;line-height:1.9}
+    .announce{margin-top:10px;border-color:rgba(255,211,110,.19);background:rgba(255,211,110,.055)}
     .announce b{display:block;font-size:11px;color:#ffe19a;margin-bottom:5px}
     .announce p{margin:0;color:var(--muted2);line-height:1.9;font-size:11px;white-space:pre-wrap}
-    .footer{padding:28px 4px 5px;text-align:center;color:var(--muted);font-size:10px;line-height:1.9}
+
+    .configs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+    .config-row{
+      display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:11px;
+      border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.018);min-width:0
+    }
+    .proto{
+      width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+      background:linear-gradient(135deg,rgba(59,159,255,.13),rgba(112,231,255,.05));border:1px solid rgba(119,201,255,.12);
+      font-size:9px;font-weight:900;direction:ltr;overflow:hidden
+    }
+    .config-main{min-width:0}
+    .config-main b{display:block;font-size:10px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .config-main code{display:block;direction:ltr;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:9px}
+    .copy-mini{width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);cursor:pointer}
+    .footer{padding:28px 4px 6px;text-align:center;color:var(--muted);font-size:10px;line-height:1.9}
+
+    .mobile-bar{
+      position:fixed;z-index:40;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);
+      width:min(620px,calc(100% - 18px));padding:8px;border:1px solid var(--line);border-radius:20px;
+      background:color-mix(in srgb,var(--panel) 90%,transparent);backdrop-filter:blur(22px);box-shadow:0 18px 50px rgba(0,0,0,.32);
+      display:none;grid-template-columns:1fr 1fr 1fr;gap:7px
+    }
+    .mobile-bar button,.mobile-bar a{
+      min-height:48px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);color:var(--text);
+      font-size:10px;font-weight:850;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px
+    }
+    .mobile-bar .primary{border-color:transparent;background:linear-gradient(135deg,#1778e8,#43b6ff)}
+
     .toast{
-      position:fixed;z-index:50;left:50%;bottom:22px;transform:translate(-50%,18px);
+      position:fixed;z-index:60;left:50%;bottom:86px;transform:translate(-50%,18px);
       min-width:190px;max-width:calc(100% - 30px);padding:11px 14px;border:1px solid var(--line);border-radius:14px;
-      background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(16px);box-shadow:var(--shadow);
+      background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(16px);box-shadow:var(--shadow);
       text-align:center;font-size:11px;font-weight:800;opacity:0;pointer-events:none;transition:.22s
     }
     .toast.show{opacity:1;transform:translate(-50%,0)}
-    .skeleton{position:relative;color:transparent!important;overflow:hidden;background:rgba(255,255,255,.05);border-radius:8px}
-    .skeleton:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);animation:sh 1.3s infinite}
-    @keyframes sh{to{transform:translateX(100%)}}
-    @media(max-width:760px){
-      .shell{width:min(100% - 18px,var(--max));padding-top:9px}
-      .topbar{top:7px;border-radius:19px}
-      .brand-logo{width:44px;height:44px;border-radius:15px}
-      .hero{padding:19px;border-radius:26px}
-      .hero-grid{grid-template-columns:1fr}
-      .usage-card{min-height:215px}
-      .stats{grid-template-columns:1fr 1fr}
-      .action-grid{grid-template-columns:1fr}
-      .section-title{align-items:start;flex-direction:column;gap:3px}
+    .pulse{animation:pulse 1.8s ease-in-out infinite}
+    @keyframes pulse{50%{opacity:.55}}
+    @media(max-width:820px){
+      .identity-grid,.overview,.action-grid{grid-template-columns:1fr}
+      .configs{grid-template-columns:1fr}
+      .metrics{grid-template-columns:1fr 1fr}
+      .identity-copy{min-height:auto}
+      .identity{padding:21px}
     }
-    @media(max-width:430px){
-      .stats{gap:8px}
-      .stat{min-height:112px;padding:13px;border-radius:19px}
-      .stat strong{font-size:16px}
-      .hero{border-radius:24px}
-      h1{font-size:30px}
-      .ring{width:154px;height:154px}
-      .ring:after{width:122px;height:122px}
-      .ring-copy strong{font-size:25px}
-      .brand strong{max-width:45vw}
+    @media(max-width:640px){
+      .shell{width:min(100% - 16px,var(--max));padding-top:8px;padding-bottom:118px}
+      .topbar{top:6px;min-height:62px;border-radius:18px}
+      .brand-logo{width:44px;height:44px;border-radius:14px}
+      .brand strong{font-size:15px;max-width:44vw}
+      .identity{margin-top:10px;padding:17px;border-radius:24px}
+      .identity-grid{gap:14px}
+      .plan-name{font-size:32px;margin-top:10px}
+      .identity-copy p{font-size:12px}
+      .orb-wrap{min-height:214px;border-radius:21px}
+      .orb{width:154px;height:154px}
+      .orb-center strong{font-size:25px}
+      .identity-footer{align-items:flex-start;flex-direction:column}
+      .overview{gap:8px}
+      .metrics{gap:8px}
+      .metric{min-height:112px;padding:13px;border-radius:18px}
+      .metric strong{font-size:16px}
+      .quick-grid{grid-template-columns:1fr 1fr}
+      .mobile-bar{display:grid}
+      .footer{padding-bottom:8px}
+      .section-title{align-items:start;flex-direction:column;gap:4px;margin-top:22px}
+      .big-row{align-items:flex-start;flex-direction:column}
+      .mini-chart{max-width:none;width:100%}
     }
-    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+    @media(max-width:370px){
+      .shell{width:min(100% - 12px,var(--max))}
+      .top-actions{gap:4px}
+      .icon-btn{width:40px;height:40px;border-radius:12px}
+      .brand{gap:8px}
+      .brand-logo{width:41px;height:41px}
+      .metrics{grid-template-columns:1fr 1fr}
+      .metric{padding:11px}
+      .metric span{font-size:9px}
+      .metric strong{font-size:15px}
+      .quick-grid{grid-template-columns:1fr}
+      .mobile-bar{width:calc(100% - 12px);gap:5px;padding:6px}
+      .mobile-bar button,.mobile-bar a{font-size:9px;min-height:46px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+      .orb:after{animation:none}
+    }
   </style>
 </head>
 <body>
   <main class="shell">
-    <header class="topbar">
+    <header class="topbar glass">
       <div class="brand">
         <img class="brand-logo" src="data:image/webp;base64,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" alt="BlueGate">
         <div>
@@ -195,66 +313,107 @@
       </div>
     </header>
 
-    <section class="hero">
-      <div class="hero-grid">
-        <div>
-          <div class="eyebrow"><i></i><span>SUBSCRIPTION CENTER</span></div>
-          <h1>سرویس تو، یک‌جا و همیشه به‌روز.</h1>
-          <p>وضعیت اتصال، مصرف حجم، زمان باقی‌مانده و لینک اشتراک BlueGate را از همین صفحه مدیریت کن.</p>
-          <div class="status-row">
-            <span id="enabledPill" class="pill ok">
-              <i class="dot"></i><span>سرویس فعال</span>
-            </span>
-            <span id="onlinePill" class="pill ok">
-              <i class="dot"></i><span>آنلاین</span>
-            </span>
-            <span class="pill"><span>شناسه</span><b style="direction:ltr">demo-8f42</b></span>
+    <section class="identity">
+      <div class="identity-grid">
+        <div class="identity-copy">
+          <div>
+            <div class="micro"><i></i><span>BLUEGATE SECURE PASS</span></div>
+            <h1 class="plan-name">BluePing Pro</h1>
+            <p>یک داشبورد اختصاصی برای مدیریت سرویس، مصرف، اعتبار و اتصال‌های BlueGate — سریع، امن و همیشه همگام با 3x-ui.</p>
+          </div>
+          <div class="identity-footer">
+            <div class="status-pills">
+              <span id="enabledPill" class="pill ok"><i class="dot"></i><span>ACTIVE</span></span>
+              <span id="onlinePill" class="pill ok"><i class="dot"></i><span>ONLINE</span></span>
+              <span class="pill"><span>ID</span><b style="direction:ltr">demo-8f42</b></span>
+            </div>
+            <div class="secure-badge">✦ <span><b>Protected</b> by BlueGate</span></div>
           </div>
         </div>
 
-        <div class="usage-card">
-          <div id="usageRing" class="ring">
-            <div class="ring-copy">
+        <div class="orb-wrap">
+          <div id="usageRing" class="orb">
+            <div class="orb-center">
               <strong id="usagePercent">—</strong>
-              <span>مصرف‌شده از حجم کل</span>
+              <span>USED</span>
             </div>
           </div>
-          <div class="ring-caption"><b id="usedHero">8.4 GB</b> مصرف شده</div>
+          <div class="orb-sub"><b id="usedHero">8.4 GB</b> از حجم سرویس مصرف شده</div>
         </div>
       </div>
     </section>
 
     <div class="section-title">
-      <div><h2>وضعیت سرویس</h2><span>اطلاعات به‌صورت زنده از 3x-ui خوانده می‌شود.</span></div>
+      <div><h2>نمای کلی سرویس</h2><span>وضعیت و مصرف به‌صورت زنده از پنل همگام می‌شود.</span></div>
       <span id="lastRefresh">در حال همگام‌سازی…</span>
     </div>
 
-    <section class="stats">
-      <article class="stat"><div class="stat-icon">⇩</div><span>دانلود</span><strong id="download">7.9 GB</strong><small>ترافیک دریافت‌شده</small></article>
-      <article class="stat"><div class="stat-icon">⇧</div><span>آپلود</span><strong id="upload">512 MB</strong><small>ترافیک ارسال‌شده</small></article>
-      <article class="stat"><div class="stat-icon">◔</div><span>باقی‌مانده</span><strong id="remained">21.6 GB</strong><small id="totalText">از 30 GB</small></article>
-      <article class="stat"><div class="stat-icon">⌛</div><span>اعتبار</span><strong id="expiryText">—</strong><small id="lastOnlineText">آخرین اتصال: —</small></article>
+    <section class="overview">
+      <article class="usage-panel">
+        <div class="usage-head">
+          <div><h3>مصرف ترافیک</h3><small>Traffic overview</small></div>
+          <span class="pill"><span id="usagePercentChip">—</span></span>
+        </div>
+        <div class="big-row">
+          <div class="big-number"><strong id="remainedBig">21.6 GB</strong><span>حجم باقی‌مانده</span></div>
+          <div class="mini-chart" aria-hidden="true">
+            <i style="height:27%"></i><i style="height:48%"></i><i style="height:38%"></i><i style="height:63%"></i>
+            <i style="height:52%"></i><i style="height:77%"></i><i style="height:61%"></i><i style="height:88%"></i>
+            <i style="height:72%"></i><i style="height:94%"></i><i style="height:82%"></i><i style="height:100%"></i>
+          </div>
+        </div>
+        <div class="progress-track"><div id="usageBar" class="progress-fill"></div></div>
+        <div class="duo">
+          <div class="duo-item"><span>دانلود</span><strong id="download">7.9 GB</strong></div>
+          <div class="duo-item"><span>آپلود</span><strong id="upload">512 MB</strong></div>
+        </div>
+      </article>
+
+      <article class="expiry-panel">
+        <div class="usage-head">
+          <div><h3>اعتبار سرویس</h3><small>Subscription lifetime</small></div>
+          <span class="pill" id="expiryState"><span>—</span></span>
+        </div>
+        <div class="countdown">
+          <div class="days"><strong id="expiryText">—</strong><span>باقی‌مانده تا پایان اعتبار</span></div>
+          <div class="date-box"><b id="expiryDate">—</b><small>تاریخ انقضا</small></div>
+        </div>
+        <div class="online-line"><span>آخرین اتصال</span><b id="lastOnlineText">—</b></div>
+      </article>
+    </section>
+
+    <section class="metrics">
+      <article class="metric"><div class="metric-icon">⇩</div><span>DOWNLOAD</span><strong id="download2">7.9 GB</strong><small>دریافت‌شده</small></article>
+      <article class="metric"><div class="metric-icon">⇧</div><span>UPLOAD</span><strong id="upload2">512 MB</strong><small>ارسال‌شده</small></article>
+      <article class="metric"><div class="metric-icon">◔</div><span>REMAINING</span><strong id="remained">21.6 GB</strong><small id="totalText">از 30 GB</small></article>
+      <article class="metric"><div class="metric-icon">⌁</div><span>SYNC</span><strong>LIVE</strong><small>همگام با 3x-ui</small></article>
     </section>
 
     <div class="section-title">
-      <div><h2>لینک اشتراک</h2><span>همین لینک را داخل کلاینت موردنظرت Import کن.</span></div>
+      <div><h2>اتصال سریع</h2><span>لینک اصلی و فرمت‌های پرکاربرد برای Import.</span></div>
     </div>
 
     <section class="action-grid">
       <article class="subscription-card">
-        <div class="card-head"><div><h3>Subscription URL</h3><small>لینک اصلی و خودکار BlueGate</small></div><span class="pill ok">امن و اختصاصی</span></div>
+        <div class="card-head"><div><h3>Subscription URL</h3><small>لینک امن و اختصاصی سرویس</small></div><span class="pill ok">READY</span></div>
         <div id="subUrl" class="url-box">https://sub.example.com/sub/demo-8f42</div>
         <div class="btns">
           <button type="button" class="btn primary" data-copy="https://sub.example.com/sub/demo-8f42">⧉ کپی لینک اشتراک</button>
           <button type="button" class="btn" data-copy="https://sub.example.com/json/demo-8f42">JSON</button>
           <button type="button" class="btn" data-copy="https://sub.example.com/clash/demo-8f42">Clash / Mihomo</button>
         </div>
+        <div class="quick-grid">
+          <button type="button" class="quick" data-copy="https://sub.example.com/sub/demo-8f42"><i>◈</i><b>Main Subscription</b><span>Import اصلی</span></button>
+          <button type="button" class="quick" data-copy="https://sub.example.com/json/demo-8f42"><i>{ }</i><b>JSON</b><span>برای کلاینت‌های سازگار</span></button>
+          <button type="button" class="quick" data-copy="https://sub.example.com/clash/demo-8f42"><i>⌘</i><b>Clash</b><span>Mihomo / Clash</span></button>
+        </div>
       </article>
 
       <aside class="support-card">
         <div>
-          <div class="card-head"><h3>پشتیبانی BlueGate</h3><span class="stat-icon">✦</span></div>
-          <p>اگر سرویس وصل نمی‌شود یا برای افزودن کانفیگ نیاز به راهنمایی داری، مستقیم با پشتیبانی در تماس باش.</p>
+          <div class="support-visual"><b>Need help?<br>BlueGate Support</b></div>
+          <div class="card-head"><h3>پشتیبانی مستقیم</h3><span class="metric-icon">✦</span></div>
+          <p>اگر اتصال برقرار نمی‌شود یا برای Import کردن سرویس نیاز به راهنمایی داری، پشتیبانی BlueGate در دسترس است.</p>
         </div>
         <a class="btn green" href="https://t.me/BlueGateSupport" target="_blank" rel="noopener noreferrer">ارتباط با پشتیبانی</a>
       </aside>
@@ -274,9 +433,15 @@
 
     <footer class="footer">
       <b>BlueGate • BluePing</b><br>
-      صفحه اختصاصی مدیریت اشتراک — اطلاعات این صفحه فقط از سرویس 3x-ui شما دریافت می‌شود.
+      Secure Subscription Experience • Powered by 3x-ui
     </footer>
   </main>
+
+  <nav class="mobile-bar" aria-label="اقدامات سریع">
+    <button type="button" data-copy="https://sub.example.com/sub/demo-8f42">⧉ کپی لینک</button>
+    <button type="button" class="primary" id="mobileRefresh">↻ بروزرسانی</button>
+    <a href="https://t.me/BlueGateSupport" target="_blank" rel="noopener noreferrer">✦ پشتیبانی</a>
+  </nav>
 
   <div id="toast" class="toast">کپی شد</div>
 
@@ -321,12 +486,9 @@
         if (sec < 86400) return Math.floor(sec/3600)+' ساعت پیش';
         return Math.floor(sec/86400)+' روز پیش';
       };
-      const daysLeft = (unixSeconds) => {
-        if (!unixSeconds || Number(unixSeconds) === 0) return 'نامحدود';
-        const d = Math.ceil((Number(unixSeconds)*1000-Date.now())/86400000);
-        if (d < 0) return 'منقضی';
-        if (d === 0) return 'امروز';
-        return d+' روز';
+      const daysLeftNumber = (unixSeconds) => {
+        if (!unixSeconds || Number(unixSeconds) === 0) return null;
+        return Math.ceil((Number(unixSeconds)*1000-Date.now())/86400000);
       };
       const setPill = (el, ok, goodText, badText, badClass='warn') => {
         if (!el) return; el.className='pill '+(ok?'ok':badClass);
@@ -335,27 +497,47 @@
       const renderUsage = (data) => {
         const total = Number(data.totalByte || 0);
         const used = Number(data.downloadByte || 0) + Number(data.uploadByte || 0);
-        let p = total > 0 ? Math.min(100, Math.max(0, used/total*100)) : 0;
+        const p = total > 0 ? Math.min(100, Math.max(0, used/total*100)) : 0;
         q('#usageRing').style.setProperty('--p', p.toFixed(1));
         q('#usagePercent').textContent = total > 0 ? Math.round(p)+'%' : '∞';
+        q('#usagePercentChip').textContent = total > 0 ? Math.round(p)+'% USED' : 'UNLIMITED';
+        q('#usageBar').style.width = (total > 0 ? p : 100)+'%';
+      };
+      const renderExpiry = (d) => {
+        const days = daysLeftNumber(d.expire);
+        const state = q('#expiryState');
+        if (days === null){
+          q('#expiryText').textContent='∞';
+          q('#expiryDate').textContent='نامحدود';
+          state.className='pill ok'; state.querySelector('span').textContent='UNLIMITED';
+        } else if (days < 0){
+          q('#expiryText').textContent='منقضی';
+          q('#expiryDate').textContent=fmtDate(d.expire);
+          state.className='pill bad'; state.querySelector('span').textContent='EXPIRED';
+        } else {
+          q('#expiryText').textContent=days===0?'امروز':days+' روز';
+          q('#expiryDate').textContent=fmtDate(d.expire);
+          state.className=days<=3?'pill warn':'pill ok';
+          state.querySelector('span').textContent=days<=3?'ENDING SOON':'ACTIVE';
+        }
+        q('#lastOnlineText').textContent=fmtAgo(d.lastOnline);
       };
       const render = (d) => {
-        setPill(q('#enabledPill'), !!d.enabled, 'سرویس فعال', 'سرویس غیرفعال', 'bad');
-        setPill(q('#onlinePill'), !!d.isOnline, 'آنلاین', 'آفلاین', 'warn');
-        if (d.download != null) q('#download').textContent=d.download;
-        if (d.upload != null) q('#upload').textContent=d.upload;
-        if (d.remained != null) q('#remained').textContent=d.remained;
+        setPill(q('#enabledPill'), !!d.enabled, 'ACTIVE', 'DISABLED', 'bad');
+        setPill(q('#onlinePill'), !!d.isOnline, 'ONLINE', 'OFFLINE', 'warn');
+        if (d.download != null) { q('#download').textContent=d.download; q('#download2').textContent=d.download; }
+        if (d.upload != null) { q('#upload').textContent=d.upload; q('#upload2').textContent=d.upload; }
+        if (d.remained != null) { q('#remained').textContent=d.remained; q('#remainedBig').textContent=d.remained; }
         if (d.total != null) q('#totalText').textContent='از '+d.total;
         if (d.used != null) q('#usedHero').textContent=d.used;
-        q('#expiryText').textContent = d.expire == 0 ? 'نامحدود' : daysLeft(d.expire);
-        q('#expiryText').title = fmtDate(d.expire);
-        q('#lastOnlineText').textContent='آخرین اتصال: '+fmtAgo(d.lastOnline);
         renderUsage(d);
+        renderExpiry(d);
         q('#lastRefresh').textContent='آخرین بروزرسانی: '+new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit'}).format(new Date());
       };
 
       const refresh = async (silent=false) => {
-        const btn=q('#refreshBtn'); if(btn) btn.textContent='…';
+        const btn=q('#refreshBtn'), mb=q('#mobileRefresh');
+        if(btn) btn.textContent='…'; if(mb) mb.textContent='…';
         try {
           const url = new URL(location.href); url.searchParams.set('format','info'); url.searchParams.delete('html');
           const res = await fetch(url.toString(), {cache:'no-store', headers:{'Accept':'application/json'}});
@@ -363,7 +545,9 @@
           const data = await res.json(); render(data); if(!silent) toast('اطلاعات بروزرسانی شد');
         } catch(e) {
           if(!silent) toast('بروزرسانی ناموفق بود');
-        } finally { if(btn) btn.textContent='↻'; }
+        } finally {
+          if(btn) btn.textContent='↻'; if(mb) mb.textContent='↻ بروزرسانی';
+        }
       };
 
       render({
@@ -377,15 +561,16 @@
       });
 
       q('#refreshBtn').addEventListener('click',()=>refresh(false));
+      const mr=q('#mobileRefresh'); if(mr) mr.addEventListener('click',()=>refresh(false));
       setInterval(()=>refresh(true),15000);
 
       const root=document.documentElement, themeBtn=q('#themeBtn');
-      const saved=localStorage.getItem('bluegate-sub-theme');
+      const saved=localStorage.getItem('bluegate-sub-theme-v2');
       const preferred=saved || (matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
       root.dataset.theme=preferred; themeBtn.textContent=preferred==='dark'?'☾':'☀';
       themeBtn.addEventListener('click',()=>{
         const n=root.dataset.theme==='dark'?'light':'dark'; root.dataset.theme=n;
-        localStorage.setItem('bluegate-sub-theme',n); themeBtn.textContent=n==='dark'?'☾':'☀';
+        localStorage.setItem('bluegate-sub-theme-v2',n); themeBtn.textContent=n==='dark'?'☾':'☀';
       });
     })();
   </script>
