@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#06101d">
+  <meta name="color-scheme" content="dark light">
+  <title>{{if .subTitle}}{{.subTitle}}{{else}}BlueGate{{end}} • Subscription</title>
+  <style>
+    :root{
+      --bg:#06101d;--bg2:#081522;--surface:#0b1828;--surface2:#102035;--surface3:#152a43;
+      --text:#f7fbff;--muted:#94abc2;--muted2:#b7c7d7;--line:#1c3550;--line2:#315e86;
+      --blue:#3b9fff;--blue2:#77c9ff;--green:#4bd8a7;--purple:#a98aff;--gold:#ffd36e;
+      --danger:#ff758a;--shadow:0 26px 80px rgba(0,0,0,.32);--radius:28px;--max:1040px;
+      font-family:Vazirmatn,Tahoma,Arial,system-ui,-apple-system,sans-serif;color-scheme:dark
+    }
+    html[data-theme="light"]{
+      --bg:#edf4fa;--bg2:#f5f9fc;--surface:#fff;--surface2:#f7fbff;--surface3:#eaf3fa;
+      --text:#102033;--muted:#627990;--muted2:#4d657c;--line:#d7e5f0;--line2:#b7d1e4;
+      --shadow:0 24px 65px rgba(49,83,112,.13);color-scheme:light
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;min-height:100vh;color:var(--text);font-size:15px;overflow-x:hidden;
+      background:
+        radial-gradient(circle at 8% -4%,rgba(50,144,244,.20),transparent 28%),
+        radial-gradient(circle at 94% 8%,rgba(61,177,255,.10),transparent 24%),
+        radial-gradient(circle at 55% 104%,rgba(169,138,255,.08),transparent 28%),
+        linear-gradient(180deg,var(--bg),var(--bg2) 42%,var(--bg));
+    }
+    button,a{font:inherit;-webkit-tap-highlight-color:transparent}
+    a{color:inherit}
+    .shell{width:min(var(--max),calc(100% - 28px));margin:auto;padding:18px 0 40px}
+    .topbar{
+      position:sticky;top:10px;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:14px;
+      min-height:66px;padding:9px 12px;border:1px solid color-mix(in srgb,var(--line) 76%,transparent);
+      border-radius:22px;background:color-mix(in srgb,var(--surface) 84%,transparent);
+      backdrop-filter:blur(20px);box-shadow:0 14px 46px rgba(0,0,0,.13)
+    }
+    .brand{display:flex;align-items:center;gap:11px;min-width:0}
+    .brand-logo{
+      width:48px;height:48px;border-radius:16px;object-fit:cover;flex:0 0 auto;
+      box-shadow:0 10px 28px rgba(33,137,236,.19);border:1px solid rgba(119,201,255,.16)
+    }
+    .brand small{display:block;color:var(--blue2);font-size:9px;font-weight:900;letter-spacing:.16em;direction:ltr}
+    .brand strong{display:block;margin-top:2px;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52vw}
+    .top-actions{display:flex;gap:7px}
+    .icon-btn{
+      width:43px;height:43px;border:1px solid var(--line);border-radius:14px;background:var(--surface2);
+      color:var(--text);display:grid;place-items:center;cursor:pointer;transition:.18s
+    }
+    .icon-btn:hover{transform:translateY(-2px);border-color:var(--line2)}
+    .hero{
+      position:relative;isolation:isolate;margin-top:18px;padding:27px;border:1px solid var(--line);border-radius:32px;
+      background:
+        radial-gradient(circle at 0 0,rgba(59,159,255,.13),transparent 42%),
+        linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.016));
+      box-shadow:var(--shadow);overflow:hidden
+    }
+    .hero:before{
+      content:"";position:absolute;inset:0 0 auto;height:3px;
+      background:linear-gradient(90deg,transparent,rgba(77,181,255,.85),transparent);opacity:.7
+    }
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:22px;align-items:center}
+    .eyebrow{display:flex;align-items:center;gap:8px;color:var(--blue2);font-size:10px;font-weight:900;letter-spacing:.08em}
+    .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 6px rgba(59,159,255,.08)}
+    h1{font-size:clamp(30px,5vw,52px);line-height:1.16;letter-spacing:-1.4px;margin:12px 0 10px}
+    .hero p{margin:0;color:var(--muted);line-height:1.95;max-width:670px}
+    .status-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:19px}
+    .pill{
+      display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:7px 10px;border:1px solid var(--line);
+      border-radius:999px;background:rgba(255,255,255,.025);color:var(--muted2);font-size:11px;font-weight:800
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+    .pill.ok{border-color:rgba(75,216,167,.22);background:rgba(75,216,167,.07);color:#81e8c3}
+    .pill.ok .dot{background:var(--green);box-shadow:0 0 0 5px rgba(75,216,167,.08)}
+    .pill.bad{border-color:rgba(255,117,138,.22);background:rgba(255,117,138,.07);color:#ff9aac}
+    .pill.bad .dot{background:var(--danger)}
+    .pill.warn{border-color:rgba(255,211,110,.22);background:rgba(255,211,110,.07);color:#ffe19a}
+    .pill.warn .dot{background:var(--gold)}
+    .usage-card{
+      position:relative;min-height:240px;border:1px solid var(--line);border-radius:28px;padding:20px;
+      background:linear-gradient(180deg,var(--surface2),var(--surface));display:grid;place-items:center
+    }
+    .ring{
+      --p:0;width:170px;height:170px;border-radius:50%;display:grid;place-items:center;
+      background:conic-gradient(var(--blue) calc(var(--p)*1%),rgba(255,255,255,.075) 0);
+      box-shadow:0 20px 52px rgba(0,0,0,.18),inset 0 0 28px rgba(59,159,255,.08)
+    }
+    .ring:after{
+      content:"";position:absolute;width:136px;height:136px;border-radius:50%;
+      background:linear-gradient(180deg,var(--surface2),var(--surface));
+      box-shadow:inset 0 0 0 1px var(--line)
+    }
+    .ring-copy{position:relative;z-index:2;text-align:center}
+    .ring-copy strong{display:block;font-size:29px;direction:ltr}
+    .ring-copy span{display:block;margin-top:3px;font-size:10px;color:var(--muted)}
+    .ring-caption{margin-top:13px;color:var(--muted2);font-size:11px;text-align:center}
+    .section-title{display:flex;align-items:end;justify-content:space-between;gap:14px;margin:26px 3px 12px}
+    .section-title h2{font-size:20px;margin:0}
+    .section-title span{font-size:11px;color:var(--muted)}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    .stat{
+      min-height:126px;padding:16px;border:1px solid var(--line);border-radius:23px;
+      background:linear-gradient(180deg,rgba(255,255,255,.033),rgba(255,255,255,.016))
+    }
+    .stat-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:rgba(59,159,255,.08);font-size:17px}
+    .stat span{display:block;margin-top:13px;color:var(--muted);font-size:10px}
+    .stat strong{display:block;margin-top:4px;font-size:18px;direction:ltr;text-align:right}
+    .stat small{display:block;margin-top:4px;color:var(--muted2);font-size:9px}
+    .action-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:10px}
+    .subscription-card,.support-card,.configs-card,.announce{
+      padding:18px;border:1px solid var(--line);border-radius:26px;
+      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.014))
+    }
+    .card-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .card-head h3{font-size:15px;margin:0}
+    .card-head small{color:var(--muted);font-size:9px}
+    .url-box{
+      margin-top:13px;padding:12px 13px;border:1px solid var(--line);border-radius:16px;
+      background:rgba(0,0,0,.12);direction:ltr;text-align:left;font:11px ui-monospace,SFMono-Regular,Consolas,monospace;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted2)
+    }
+    .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .btn{
+      min-height:44px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface2);
+      color:var(--text);font-weight:850;font-size:11px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
+      gap:7px;cursor:pointer;transition:.18s
+    }
+    .btn:hover{transform:translateY(-2px);border-color:var(--line2)}
+    .btn.primary{border-color:transparent;background:linear-gradient(135deg,#1778e8,#43b6ff);box-shadow:0 12px 28px rgba(39,142,240,.20)}
+    .btn.green{border-color:rgba(75,216,167,.22);background:rgba(75,216,167,.08);color:#8ceac8}
+    .support-card{display:flex;flex-direction:column;justify-content:space-between}
+    .support-card p{margin:10px 0 14px;color:var(--muted);font-size:11px;line-height:1.9}
+    .configs{display:grid;gap:8px;margin-top:12px}
+    .config-row{
+      display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:11px;
+      border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.018);min-width:0
+    }
+    .config-row code{direction:ltr;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted2);font-size:10px}
+    .copy-mini{width:35px;height:35px;border:1px solid var(--line);border-radius:11px;background:var(--surface2);color:var(--text);cursor:pointer}
+    .announce{margin-top:10px;border-color:rgba(255,211,110,.18);background:rgba(255,211,110,.055)}
+    .announce b{display:block;font-size:11px;color:#ffe19a;margin-bottom:5px}
+    .announce p{margin:0;color:var(--muted2);line-height:1.9;font-size:11px;white-space:pre-wrap}
+    .footer{padding:28px 4px 5px;text-align:center;color:var(--muted);font-size:10px;line-height:1.9}
+    .toast{
+      position:fixed;z-index:50;left:50%;bottom:22px;transform:translate(-50%,18px);
+      min-width:190px;max-width:calc(100% - 30px);padding:11px 14px;border:1px solid var(--line);border-radius:14px;
+      background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(16px);box-shadow:var(--shadow);
+      text-align:center;font-size:11px;font-weight:800;opacity:0;pointer-events:none;transition:.22s
+    }
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    .skeleton{position:relative;color:transparent!important;overflow:hidden;background:rgba(255,255,255,.05);border-radius:8px}
+    .skeleton:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);animation:sh 1.3s infinite}
+    @keyframes sh{to{transform:translateX(100%)}}
+    @media(max-width:760px){
+      .shell{width:min(100% - 18px,var(--max));padding-top:9px}
+      .topbar{top:7px;border-radius:19px}
+      .brand-logo{width:44px;height:44px;border-radius:15px}
+      .hero{padding:19px;border-radius:26px}
+      .hero-grid{grid-template-columns:1fr}
+      .usage-card{min-height:215px}
+      .stats{grid-template-columns:1fr 1fr}
+      .action-grid{grid-template-columns:1fr}
+      .section-title{align-items:start;flex-direction:column;gap:3px}
+    }
+    @media(max-width:430px){
+      .stats{gap:8px}
+      .stat{min-height:112px;padding:13px;border-radius:19px}
+      .stat strong{font-size:16px}
+      .hero{border-radius:24px}
+      h1{font-size:30px}
+      .ring{width:154px;height:154px}
+      .ring:after{width:122px;height:122px}
+      .ring-copy strong{font-size:25px}
+      .brand strong{max-width:45vw}
+    }
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <img class="brand-logo" src="data:image/webp;base64,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" alt="BlueGate">
+        <div>
+          <small>BLUEGATE • BLUEPING</small>
+          <strong>{{if .subTitle}}{{.subTitle}}{{else}}سرویس BlueGate{{end}}</strong>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" type="button" id="refreshBtn" title="بروزرسانی">↻</button>
+        <button class="icon-btn" type="button" id="themeBtn" title="تغییر تم">☾</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow"><i></i><span>SUBSCRIPTION CENTER</span></div>
+          <h1>سرویس تو، یک‌جا و همیشه به‌روز.</h1>
+          <p>وضعیت اتصال، مصرف حجم، زمان باقی‌مانده و لینک اشتراک BlueGate را از همین صفحه مدیریت کن.</p>
+          <div class="status-row">
+            <span id="enabledPill" class="pill {{if .enabled}}ok{{else}}bad{{end}}">
+              <i class="dot"></i><span>{{if .enabled}}سرویس فعال{{else}}سرویس غیرفعال{{end}}</span>
+            </span>
+            <span id="onlinePill" class="pill {{if .isOnline}}ok{{else}}warn{{end}}">
+              <i class="dot"></i><span>{{if .isOnline}}آنلاین{{else}}آفلاین{{end}}</span>
+            </span>
+            <span class="pill"><span>شناسه</span><b style="direction:ltr">{{.sId}}</b></span>
+          </div>
+        </div>
+
+        <div class="usage-card">
+          <div id="usageRing" class="ring">
+            <div class="ring-copy">
+              <strong id="usagePercent">—</strong>
+              <span>مصرف‌شده از حجم کل</span>
+            </div>
+          </div>
+          <div class="ring-caption"><b id="usedHero">{{.used}}</b> مصرف شده</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-title">
+      <div><h2>وضعیت سرویس</h2><span>اطلاعات به‌صورت زنده از 3x-ui خوانده می‌شود.</span></div>
+      <span id="lastRefresh">در حال همگام‌سازی…</span>
+    </div>
+
+    <section class="stats">
+      <article class="stat"><div class="stat-icon">⇩</div><span>دانلود</span><strong id="download">{{.download}}</strong><small>ترافیک دریافت‌شده</small></article>
+      <article class="stat"><div class="stat-icon">⇧</div><span>آپلود</span><strong id="upload">{{.upload}}</strong><small>ترافیک ارسال‌شده</small></article>
+      <article class="stat"><div class="stat-icon">◔</div><span>باقی‌مانده</span><strong id="remained">{{.remained}}</strong><small id="totalText">از {{.total}}</small></article>
+      <article class="stat"><div class="stat-icon">⌛</div><span>اعتبار</span><strong id="expiryText">—</strong><small id="lastOnlineText">آخرین اتصال: —</small></article>
+    </section>
+
+    <div class="section-title">
+      <div><h2>لینک اشتراک</h2><span>همین لینک را داخل کلاینت موردنظرت Import کن.</span></div>
+    </div>
+
+    <section class="action-grid">
+      <article class="subscription-card">
+        <div class="card-head"><div><h3>Subscription URL</h3><small>لینک اصلی و خودکار BlueGate</small></div><span class="pill ok">امن و اختصاصی</span></div>
+        <div id="subUrl" class="url-box">{{.subUrl}}</div>
+        <div class="btns">
+          <button type="button" class="btn primary" data-copy="{{.subUrl}}">⧉ کپی لینک اشتراک</button>
+          {{if .subJsonUrl}}<button type="button" class="btn" data-copy="{{.subJsonUrl}}">JSON</button>{{end}}
+          {{if .subClashUrl}}<button type="button" class="btn" data-copy="{{.subClashUrl}}">Clash / Mihomo</button>{{end}}
+        </div>
+      </article>
+
+      <aside class="support-card">
+        <div>
+          <div class="card-head"><h3>پشتیبانی BlueGate</h3><span class="stat-icon">✦</span></div>
+          <p>اگر سرویس وصل نمی‌شود یا برای افزودن کانفیگ نیاز به راهنمایی داری، مستقیم با پشتیبانی در تماس باش.</p>
+        </div>
+        {{if .subSupportUrl}}<a class="btn green" href="{{.subSupportUrl}}" target="_blank" rel="noopener noreferrer">ارتباط با پشتیبانی</a>{{else}}<span class="btn" style="opacity:.55;pointer-events:none">آدرس پشتیبانی تنظیم نشده</span>{{end}}
+      </aside>
+    </section>
+
+    {{if .announce}}
+    <section class="announce">
+      <b>اطلاعیه سرویس</b>
+      <p>{{.announce}}</p>
+    </section>
+    {{end}}
+
+    {{if .links}}
+    <div class="section-title">
+      <div><h2>کانفیگ‌های این اشتراک</h2><span>برای استفاده دستی یا عیب‌یابی.</span></div>
+    </div>
+    <section class="configs-card">
+      <div class="configs">
+        {{range .links}}
+        <div class="config-row">
+          <code>{{.}}</code>
+          <button type="button" class="copy-mini" data-copy="{{.}}" title="کپی">⧉</button>
+        </div>
+        {{end}}
+      </div>
+    </section>
+    {{end}}
+
+    <footer class="footer">
+      <b>BlueGate • BluePing</b><br>
+      صفحه اختصاصی مدیریت اشتراک — اطلاعات این صفحه فقط از سرویس 3x-ui شما دریافت می‌شود.
+    </footer>
+  </main>
+
+  <div id="toast" class="toast">کپی شد</div>
+
+  <script>
+    (() => {
+      const q = (s) => document.querySelector(s);
+      const initial = {
+        enabled: {{if .enabled}}true{{else}}false{{end}},
+        online: {{if .isOnline}}true{{else}}false{{end}},
+        downloadByte: {{.downloadByte}},
+        uploadByte: {{.uploadByte}},
+        totalByte: {{.totalByte}},
+        expire: {{.expire}},
+        lastOnline: {{.lastOnline}}
+      };
+
+      const toast = (msg) => {
+        const el = q('#toast'); el.textContent = msg; el.classList.add('show');
+        clearTimeout(window.__toast); window.__toast = setTimeout(() => el.classList.remove('show'), 1700);
+      };
+
+      const copy = async (value) => {
+        if (!value) return;
+        try { await navigator.clipboard.writeText(value); toast('کپی شد ✓'); }
+        catch (_) {
+          const ta = document.createElement('textarea'); ta.value = value; document.body.appendChild(ta);
+          ta.select(); document.execCommand('copy'); ta.remove(); toast('کپی شد ✓');
+        }
+      };
+      document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => copy(b.dataset.copy)));
+
+      const fmtDate = (unixSeconds) => {
+        if (!unixSeconds || Number(unixSeconds) === 0) return 'نامحدود';
+        const d = new Date(Number(unixSeconds) * 1000);
+        return new Intl.DateTimeFormat('fa-IR-u-ca-persian',{year:'numeric',month:'short',day:'numeric'}).format(d);
+      };
+      const fmtAgo = (millis) => {
+        if (!millis || Number(millis) === 0) return 'ثبت نشده';
+        const sec = Math.max(0, Math.floor((Date.now() - Number(millis))/1000));
+        if (sec < 60) return 'لحظاتی پیش';
+        if (sec < 3600) return Math.floor(sec/60)+' دقیقه پیش';
+        if (sec < 86400) return Math.floor(sec/3600)+' ساعت پیش';
+        return Math.floor(sec/86400)+' روز پیش';
+      };
+      const daysLeft = (unixSeconds) => {
+        if (!unixSeconds || Number(unixSeconds) === 0) return 'نامحدود';
+        const d = Math.ceil((Number(unixSeconds)*1000-Date.now())/86400000);
+        if (d < 0) return 'منقضی';
+        if (d === 0) return 'امروز';
+        return d+' روز';
+      };
+      const setPill = (el, ok, goodText, badText, badClass='warn') => {
+        if (!el) return; el.className='pill '+(ok?'ok':badClass);
+        const txt=el.querySelector('span'); if(txt) txt.textContent=ok?goodText:badText;
+      };
+      const renderUsage = (data) => {
+        const total = Number(data.totalByte || 0);
+        const used = Number(data.downloadByte || 0) + Number(data.uploadByte || 0);
+        let p = total > 0 ? Math.min(100, Math.max(0, used/total*100)) : 0;
+        q('#usageRing').style.setProperty('--p', p.toFixed(1));
+        q('#usagePercent').textContent = total > 0 ? Math.round(p)+'%' : '∞';
+      };
+      const render = (d) => {
+        setPill(q('#enabledPill'), !!d.enabled, 'سرویس فعال', 'سرویس غیرفعال', 'bad');
+        setPill(q('#onlinePill'), !!d.isOnline, 'آنلاین', 'آفلاین', 'warn');
+        if (d.download != null) q('#download').textContent=d.download;
+        if (d.upload != null) q('#upload').textContent=d.upload;
+        if (d.remained != null) q('#remained').textContent=d.remained;
+        if (d.total != null) q('#totalText').textContent='از '+d.total;
+        if (d.used != null) q('#usedHero').textContent=d.used;
+        q('#expiryText').textContent = d.expire == 0 ? 'نامحدود' : daysLeft(d.expire);
+        q('#expiryText').title = fmtDate(d.expire);
+        q('#lastOnlineText').textContent='آخرین اتصال: '+fmtAgo(d.lastOnline);
+        renderUsage(d);
+        q('#lastRefresh').textContent='آخرین بروزرسانی: '+new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit'}).format(new Date());
+      };
+
+      const refresh = async (silent=false) => {
+        const btn=q('#refreshBtn'); if(btn) btn.textContent='…';
+        try {
+          const url = new URL(location.href); url.searchParams.set('format','info'); url.searchParams.delete('html');
+          const res = await fetch(url.toString(), {cache:'no-store', headers:{'Accept':'application/json'}});
+          if(!res.ok) throw new Error('HTTP '+res.status);
+          const data = await res.json(); render(data); if(!silent) toast('اطلاعات بروزرسانی شد');
+        } catch(e) {
+          if(!silent) toast('بروزرسانی ناموفق بود');
+        } finally { if(btn) btn.textContent='↻'; }
+      };
+
+      render({
+        ...initial,
+        isOnline: initial.online,
+        download: {{printf "%q" .download}},
+        upload: {{printf "%q" .upload}},
+        total: {{printf "%q" .total}},
+        used: {{printf "%q" .used}},
+        remained: {{printf "%q" .remained}}
+      });
+
+      q('#refreshBtn').addEventListener('click',()=>refresh(false));
+      setInterval(()=>refresh(true),15000);
+
+      const root=document.documentElement, themeBtn=q('#themeBtn');
+      const saved=localStorage.getItem('bluegate-sub-theme');
+      const preferred=saved || (matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+      root.dataset.theme=preferred; themeBtn.textContent=preferred==='dark'?'☾':'☀';
+      themeBtn.addEventListener('click',()=>{
+        const n=root.dataset.theme==='dark'?'light':'dark'; root.dataset.theme=n;
+        localStorage.setItem('bluegate-sub-theme',n); themeBtn.textContent=n==='dark'?'☾':'☀';
+      });
+    })();
+  </script>
+</body>
+</html>
